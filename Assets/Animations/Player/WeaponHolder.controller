@@ -519,9 +519,6 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: ShowWeapon
-    m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: FightingStyle
     m_EventTreshold: 0
@@ -602,13 +599,13 @@ AnimatorStateMachine:
     m_Position: {x: 30, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4129687122769350715}
-    m_Position: {x: -130, y: 240, z: 0}
+    m_Position: {x: -160, y: 270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3156313536001243584}
     m_Position: {x: 200, y: 240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 338546359011406814}
-    m_Position: {x: -270, y: 420, z: 0}
+    m_Position: {x: -210, y: 420, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1864971596347107126}
     m_Position: {x: -200, y: 560, z: 0}
@@ -620,7 +617,7 @@ AnimatorStateMachine:
     m_Position: {x: -800, y: 540, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6640397524010618709}
-    m_Position: {x: -520, y: 420, z: 0}
+    m_Position: {x: -520, y: 410, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8688037513611162006}
     m_Position: {x: -440, y: 670, z: 0}

@@ -65,10 +65,16 @@ public class Player : MonoBehaviour
 
 
     [Header("Crouch")]
-
     public bool crouch;
     public bool crouchLock;
     public bool crouchCd;
+
+
+    [Header("Attack")]
+
+    private bool attackButtonPress;
+    private float attackHoldTimer;
+    private bool attackLock;
 
 
     [Header("LockOn")]
@@ -127,9 +133,14 @@ public class Player : MonoBehaviour
         inputs.Controls.MovementController.canceled += ctx => moveController = Vector2.zero;
 
         inputs.Controls.Attack_Normal.started += ctx => AttackHolster();
+        inputs.Controls.Attack_Normal.started += ctx => AttackStart();
+
+        inputs.Controls.Attack_Normal.canceled += ctx => AttackCheck();
+
+        inputs.Controls.Attack_Normal.started += ctx => attackButtonPress = true;
+        inputs.Controls.Attack_Normal.canceled += ctx => attackButtonPress = false;
 
         inputs.Controls.Jump.performed += ctx => Jump();
-
 
         inputs.Controls.Crouch.performed += ctx => Crouch();
 
@@ -214,6 +225,35 @@ public class Player : MonoBehaviour
             Invoke("Holster", 0.01f);
         }
     }
+
+    public void AttackStart()
+    {
+        if (combatMode && !attackLock)
+        {
+            Debug.LogError("AttackStart");
+            weaponAnim.SetTrigger("AttackStart");
+        }
+    }
+
+    public void AttackCheck()
+    {
+        if (combatMode && !attackLock)
+        {
+            if(attackHoldTimer < 0.4f)
+            {
+                //LightAttack
+                Debug.LogError("LightAttack");
+                weaponAnim.SetTrigger("LightAttack");
+                weaponAnim.SetBool("NextLightAttack", !weaponAnim.GetBool("NextLightAttack"));
+            }
+            else
+            {
+                Debug.LogError("HeavyAttack");
+            }
+        }
+    }
+
+
 
     #endregion
 
@@ -395,6 +435,7 @@ public class Player : MonoBehaviour
     {
         StateMachineUpdater();
         SpeedControl();
+        AttackTimer();
     }
 
     private void FixedUpdate()
@@ -461,6 +502,17 @@ public class Player : MonoBehaviour
         rb.useGravity = !OnSlope();
     }
 
+    private void AttackTimer()
+    {
+        if (attackButtonPress)
+        {
+            attackHoldTimer += Time.deltaTime;
+        }
+        else
+        {
+            attackHoldTimer = 0;
+        }
+    }
     private void StateMachineUpdater()
     {
         if (dashing)
